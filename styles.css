@@ -47,6 +47,10 @@
   color:inherit;
 }
 
+.copyright-text a:hover{
+  text-decoration: underline;
+}
+
 /* ======================
    Game Grid
    Flex-based layout for displaying game cards in a responsive grid
