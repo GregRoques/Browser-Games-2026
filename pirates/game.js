@@ -1022,7 +1022,11 @@
 
             if (!e.scored && e.x + e.w < player.x) {
                 e.scored = true;
-                addScore(CONFIG.POINTS_JUMP_OVER);
+                if (e.type === 'ground') {
+                    addScore(CONFIG.POINTS_JUMP_OVER);
+                } else if (player.jumping && (player.groundY - jumpOffset()) <= e.y) {
+                    addScore(CONFIG.POINTS_JUMP_OVER);
+                }
             }
         }
 
@@ -1094,6 +1098,7 @@
 
             if (!player.invincible &&
                 rectsOverlap(pb.x, pb.y, pb.w, pb.h, ex, ey, ew, eh)) {
+                e.scored = true;
                 onPlayerHit();
             }
         }
