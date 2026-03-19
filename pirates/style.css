@@ -1,0 +1,514 @@
+/* ==========================================
+   BASE & RESET
+   ========================================== */
+
+/* Resets default browser margins and enforces border-box sizing */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Full-viewport body with pirate font and ocean-blue background */
+body {
+    font-family: 'Trade Winds', cursive;
+    background-color: #4a90d9;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* ==========================================
+   UTILITY CLASSES
+   ========================================== */
+
+/* Hides an element from layout and display */
+.hidden {
+    display: none !important;
+}
+
+/* ==========================================
+   SCREEN CONTAINERS
+   ========================================== */
+
+/* Base full-viewport screen layer */
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Start screen with vertical flex layout and blue background */
+.screen--start {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4vh 2vw 6vh;
+    background-color: #4a90d9;
+}
+
+/* Game screen with black letterbox background */
+.screen--game {
+    background-color: #000;
+}
+
+/* ==========================================
+   TYPOGRAPHY — TITLE
+   ========================================== */
+
+/* Wrapper for the two-line game title at the top */
+.title-container {
+    text-align: center;
+    padding-top: 2vh;
+}
+
+/* Shared brown text style for both title lines */
+.title-line {
+    color: #8B4513;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    line-height: 1.4;
+}
+
+/* Smaller sub-heading: "Teddy and Kitty in" */
+.title-line--sub {
+    font-size: clamp(1.2rem, 4vw, 2.5rem);
+}
+
+/* Larger main heading: "Shipwreck on Cheese Island" */
+.title-line--main {
+    font-size: clamp(1.4rem, 5vw, 3rem);
+}
+
+/* ==========================================
+   CHARACTER SELECTION
+   ========================================== */
+
+/* Wrapper that groups the selection row and start hint together */
+.character-select-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Horizontal flex row holding the two character options */
+.character-select {
+    display: flex;
+    justify-content: center;
+    gap: 10vw;
+    align-items: flex-end;
+}
+
+/* Single character column with centered content */
+.character-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* Pixel-art idle portrait on the start screen */
+.character-idle {
+    height: clamp(100px, 28vh, 280px);
+    width: auto;
+    image-rendering: pixelated;
+}
+
+/* Down-pointing triangle that bounces above the selected character */
+.select-arrow {
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    color: #8B4513;
+    animation: bounce 0.6s ease-in-out infinite;
+}
+
+/* Vertical bounce keyframes for the selection arrow */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+/* ==========================================
+   START / RESTART HINTS
+   ========================================== */
+
+/* Shared styling for start and restart prompt text */
+.start-hint {
+    color: #8B4513;
+    font-family: 'Trade Winds', cursive;
+    font-size: clamp(0.9rem, 2.5vw, 1.4rem);
+    text-align: center;
+    margin-top: 3vh;
+}
+
+/* Desktop-only keyboard hint (visible by default) */
+.start-hint--desktop {
+    display: block;
+}
+
+/* Mobile-only tap button (hidden by default) */
+.start-hint--mobile {
+    display: none;
+    background-color: #8B4513;
+    color: #fff;
+    border: 3px solid #5C2D06;
+    padding: 12px 44px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: clamp(1rem, 3vw, 1.5rem);
+}
+
+/* ==========================================
+   GAME AREA
+   ========================================== */
+
+/* Clipped game viewport that holds the canvas and overlays */
+.game-area {
+    position: absolute;
+    overflow: hidden;
+    background-color: #000;
+}
+
+/* Canvas element stretched to fill the game area */
+.game-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* ==========================================
+   HUD (HEADS-UP DISPLAY)
+   ========================================== */
+
+/* Top-bar container for hearts and score within the game area */
+.hud {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 10px 15px;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* Horizontal row of heart icons on the left */
+.hud__hearts {
+    display: flex;
+    gap: 5px;
+}
+
+/* Individual pixel-art heart image */
+.heart-icon {
+    width: clamp(22px, 4vw, 40px);
+    height: auto;
+    image-rendering: pixelated;
+}
+
+/* Centered score text at the top of the game area */
+.hud__score {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* ==========================================
+   OVERLAYS (COUNTDOWN & GAME OVER)
+   ========================================== */
+
+/* Shared full-cover overlay within the game area */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+    pointer-events: none;
+}
+
+/* Semi-transparent dark backdrop for the game-over state */
+.overlay--gameover {
+    background-color: rgba(0, 0, 0, 0.6);
+    pointer-events: auto;
+}
+
+/* Large countdown digit shown during the 3-2-1 sequence */
+.countdown-number {
+    font-size: clamp(5rem, 18vw, 12rem);
+    color: #fff;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.8);
+}
+
+/* "Game Over" heading on the defeat screen */
+.gameover-text {
+    font-size: clamp(2rem, 8vw, 5rem);
+    color: #ff4444;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+    margin-bottom: 0.8rem;
+}
+
+/* Final score shown below the game-over heading */
+.gameover-score {
+    font-size: clamp(1.2rem, 4vw, 2.5rem);
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    margin-bottom: 1rem;
+}
+
+/* ==========================================
+   MOBILE CONTROLS
+   ========================================== */
+
+/* Bottom bar holding jump and attack buttons (mobile only) */
+.mobile-controls {
+    display: none;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0 20px;
+    width: 100%;
+    max-width: 600px;
+    z-index: 50;
+}
+
+/* Shared base style for mobile action buttons */
+.mobile-btn {
+    font-family: 'Trade Winds', cursive;
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    padding: 14px 32px;
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+/* Blue-tinted jump button on the left */
+.mobile-btn--jump {
+    background-color: #2196F3;
+}
+
+/* Red-tinted attack button on the right */
+.mobile-btn--attack {
+    background-color: #f44336;
+}
+
+/* Landscape mobile: buttons at screen edges, overlapping game area */
+@media (orientation: landscape) {
+    body.is-mobile .mobile-controls {
+        left: 0;
+        right: 0;
+        bottom: 20px;
+        max-width: none;
+        transform: none;
+        padding: 0 20px;
+    }
+}
+
+/* ==========================================
+   RESPONSIVE — MOBILE OVERRIDES
+   ========================================== */
+
+/* On touch devices hide desktop hints and show mobile controls */
+body.is-mobile .start-hint--desktop {
+    display: none;
+}
+
+/* Show the mobile start / restart button */
+body.is-mobile .start-hint--mobile {
+    display: inline-block;
+}
+
+/* Show the mobile jump and attack bar */
+body.is-mobile .mobile-controls {
+    display: flex;
+}
+
+/* ==========================================
+   HUD — LETTER SLOTS
+   ========================================== */
+
+.hud__letters {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    display: flex;
+    gap: 2px;
+}
+
+.hud__letter-slot {
+    width: clamp(18px, 3.5vw, 32px);
+    height: clamp(22px, 4vw, 38px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(0.6rem, 2vw, 1.1rem);
+    color: rgba(255, 255, 255, 0.25);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.hud__letter-slot--collected {
+    color: #FFD700;
+    text-shadow: 1px 1px 0 #B8860B, 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.hud__letter-slot--flash {
+    animation: letter-flash 0.25s ease-in-out 6 alternate;
+}
+
+@keyframes letter-flash {
+    0%   { color: #FFD700; transform: scale(1); }
+    100% { color: #FFFFFF; transform: scale(1.3); }
+}
+
+/* ==========================================
+   WIN FADE OVERLAY
+   ========================================== */
+
+.overlay--win-fade {
+    background-color: #000;
+    opacity: 0;
+    transition: opacity 1s ease-in;
+    pointer-events: none;
+    z-index: 15;
+}
+
+.overlay--win-fade--active {
+    opacity: 1;
+}
+
+/* ==========================================
+   ENDING SCREEN
+   ========================================== */
+
+.overlay--ending {
+    background-color: #000;
+    pointer-events: auto;
+    z-index: 25;
+    opacity: 0;
+    transition: opacity 1.5s ease-in;
+}
+
+.overlay--ending--visible {
+    opacity: 1;
+}
+
+.ending-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ending-content {
+    position: absolute;
+    top: 8%;
+    left: 8%;
+    right: 8%;
+    height: 34%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.ending-typewriter {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(0.55rem, 1.8vw, 0.95rem);
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9), 0 0 8px rgba(0, 0, 0, 0.6);
+    line-height: 1.8;
+    text-align: center;
+    opacity: 1;
+    transition: opacity 0.8s ease-out;
+}
+
+.ending-typewriter--fade-out {
+    opacity: 0;
+}
+
+.ending-final {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.ending-the-end {
+    font-family: 'Trade Winds', cursive;
+    font-size: clamp(2rem, 7vw, 4.5rem);
+    color: #FFD700;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
+    margin-bottom: 1.5rem;
+}
+
+.ending-score {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(0.8rem, 2.5vw, 1.4rem);
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    margin-bottom: 2rem;
+}
+
+.ending-play-again__desktop {
+    font-family: 'Trade Winds', cursive;
+    font-size: clamp(1rem, 3vw, 1.8rem);
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    animation: play-again-flash 1s ease-in-out infinite;
+    cursor: pointer;
+}
+
+.ending-play-again__mobile {
+    display: none;
+    font-family: 'Trade Winds', cursive;
+    background-color: #8B4513;
+    color: #fff;
+    border: 3px solid #5C2D06;
+    padding: 12px 44px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    animation: play-again-flash 1s ease-in-out infinite;
+}
+
+@keyframes play-again-flash {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.3; }
+}
+
+body.is-mobile .ending-play-again__desktop {
+    display: none;
+}
+
+body.is-mobile .ending-play-again__mobile {
+    display: inline-block;
+}

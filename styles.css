@@ -1,0 +1,91 @@
+/* ======================
+   Reset Styles
+   Removes default browser margins, padding, and sets consistent box-sizing
+   ====================== */
+
+.reset-box-model {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ======================
+   Page Layout
+   Controls the overall page background and spacing
+   ====================== */
+
+.page-body {
+  min-height: 100vh;
+  background: blue;
+  padding: 40px 20px;
+}
+
+/* ======================
+   Typography
+   Styles for headings and text elements
+   ====================== */
+
+.page-title {
+  font-family: 'Press Start 2P', cursive;
+  color: #ffdd00;
+  text-shadow: 2px 2px 4px rgba(255, 255, 200, 0.4);
+  text-align: center;
+  font-size: clamp(1.2rem, 4vw, 2.5rem);
+  margin-bottom: 50px;
+}
+
+.copyright-text{
+  font-family: 'Press Start 2P', cursive;
+  color: #ffdd00;
+  font-size: .5rem;
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.copyright-text a, .copyright-text a:link, .copyright-text a:visited, .copyright-text a:active{
+  text-decoration: none;
+  color:inherit;
+}
+
+/* ======================
+   Game Grid
+   Flex-based layout for displaying game cards in a responsive grid
+   ====================== */
+
+.game-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ======================
+   Game Cards
+   Individual game link cards with hover animation
+   ====================== */
+
+.game-card {
+  display: block;
+  flex: 0 1 400px;
+  max-width: 250px;
+  transition: transform 0.2s ease;
+}
+
+.game-card:hover {
+  transform: scale(1.05);
+}
+
+/* ======================
+   Game Thumbnails
+   Responsive images displayed within each game card
+   ====================== */
+
+.game-thumbnail {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  display: block;
+}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Shipwreck on Cheese Island</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Trade+Winds&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="icon" href="images/icon/teddy-ico.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Start / Character Select Screen -->
+    <div id="start-screen" class="screen screen--start">
+        <div class="title-container">
+            <h1 class="title-line title-line--sub">Teddy and Kitty in</h1>
+            <h2 class="title-line title-line--main">Shipwreck on Cheese Island</h2>
+        </div>
+        <div class="character-select-wrapper">
+            <div class="character-select">
+                <div class="character-option" data-character="teddy">
+                    <div class="select-arrow">&#9660;</div>
+                    <img class="character-idle" src="images/Player/Teddy/idle/teddy_idle_1.png" alt="Teddy">
+                </div>
+                <div class="character-option" data-character="kitty">
+                    <div class="select-arrow hidden">&#9660;</div>
+                    <img class="character-idle" src="images/Player/Kitty/idle/kitty_idel_1.png" alt="Kitty">
+                </div>
+            </div>
+            <p class="start-hint start-hint--desktop">Press Return to Start</p>
+            <p class="start-hint start-hint--desktop">Controls: Z= Jump, X= Attack</p>
+            <button class="start-hint start-hint--mobile btn-start">Start</button>
+        </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="game-screen" class="screen screen--game hidden">
+        <div id="game-area" class="game-area">
+            <canvas id="game-canvas" class="game-canvas"></canvas>
+
+            <!-- Heads-Up Display -->
+            <div class="hud">
+                <div id="hearts-container" class="hud__hearts"></div>
+                <div id="score-display" class="hud__score">0</div>
+                <div id="letters-display" class="hud__letters"></div>
+            </div>
+
+            <!-- Win Fade Overlay -->
+            <div id="win-fade-overlay" class="overlay overlay--win-fade hidden"></div>
+
+            <!-- Countdown Overlay -->
+            <div id="countdown-overlay" class="overlay overlay--countdown hidden">
+                <span id="countdown-number" class="countdown-number">3</span>
+            </div>
+
+            <!-- Game Over Overlay -->
+            <div id="game-over-overlay" class="overlay overlay--gameover hidden">
+                <div class="gameover-text">Game Over</div>
+                <div id="final-score" class="gameover-score"></div>
+                <p class="start-hint start-hint--desktop">Press Return to Restart</p>
+                <button class="start-hint start-hint--mobile btn-restart">Play Again</button>
+            </div>
+
+            <!-- Ending Screen Overlay -->
+            <div id="ending-overlay" class="overlay overlay--ending hidden">
+                <img id="ending-bg" class="ending-bg" src="images/Ending/end_1.jpg" alt="">
+                <div class="ending-content">
+                    <p id="ending-text" class="ending-typewriter"></p>
+                </div>
+                <div id="ending-final" class="ending-final hidden">
+                    <div class="ending-the-end">The End</div>
+                    <div id="ending-score" class="ending-score"></div>
+                    <div class="ending-play-again">
+                        <span class="ending-play-again__desktop">——Play Again?——</span>
+                        <button class="ending-play-again__mobile btn-ending-restart">Play Again?</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Touch Controls -->
+        <div class="mobile-controls">
+            <button id="btn-jump" class="mobile-btn mobile-btn--jump">Jump</button>
+            <button id="btn-attack" class="mobile-btn mobile-btn--attack">Attack</button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
