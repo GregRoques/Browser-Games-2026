@@ -884,6 +884,8 @@
             sprite = img(ASSETS[c].collision[0]);
         } else if (player.attacking) {
             sprite = img(ASSETS[c].attack[player.atkFrame]);
+            var refSprite = img(ASSETS[c].running[0]);
+            h = CONFIG.PLAYER_HEIGHT * (sprite.naturalHeight / refSprite.naturalHeight);
         } else if (player.jumping) {
             sprite = img(ASSETS[c].jumping[jumpFrame()]);
         } else {
@@ -921,7 +923,9 @@
         var base = playerHitbox();
         var c = game.character;
         var atkImg = img(ASSETS[c].attack[0]);
-        var atkW = spriteW(atkImg, CONFIG.PLAYER_HEIGHT);
+        var refImg = img(ASSETS[c].running[0]);
+        var atkH = CONFIG.PLAYER_HEIGHT * (atkImg.naturalHeight / refImg.naturalHeight);
+        var atkW = spriteW(atkImg, atkH);
         return { x: player.x, y: base.y, w: atkW * 0.85, h: base.h };
     }
 
