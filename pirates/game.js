@@ -376,6 +376,8 @@
         scale = canvasH / CONFIG.VIRTUAL_HEIGHT;
 
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        gameArea.style.setProperty('--game-scale', scale);
     }
 
     /* ==========================================
