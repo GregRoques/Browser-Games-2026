@@ -64,6 +64,7 @@
   height: inherit;
   position: absolute;
   z-index: 500;
+  overflow: hidden;
 }
 
 /* ===================================================================== */

@@ -61,6 +61,25 @@ function getGameScale() {
   return window.innerWidth / REFERENCE_WIDTH;
 }
 
+// Returns a size multiplier for mobile landscape (horizontal) view only.
+// In landscape on phones, sprites need to be smaller relative to the limited
+// vertical space so the player has room to maneuver up/down.
+var MOBILE_LANDSCAPE_SIZE_SCALE = 0.5;
+function getMobileLandscapeSizeScale() {
+  var minDim = Math.min(window.innerWidth, window.innerHeight);
+  var isMobileLandscape = minDim <= 600 && window.innerWidth > window.innerHeight;
+  return isMobileLandscape ? MOBILE_LANDSCAPE_SIZE_SCALE : 1;
+}
+
+// Returns a speed multiplier for mobile landscape (horizontal) view only.
+// Slows down player, bullets, and enemies so the player has more time to react.
+var MOBILE_LANDSCAPE_SPEED_SCALE = 0.5;
+function getMobileLandscapeSpeedScale() {
+  var minDim = Math.min(window.innerWidth, window.innerHeight);
+  var isMobileLandscape = minDim <= 600 && window.innerWidth > window.innerHeight;
+  return isMobileLandscape ? MOBILE_LANDSCAPE_SPEED_SCALE : 1;
+}
+
 // ================================================================
 // Gamepad Manager
 // ================================================================
@@ -329,7 +348,7 @@ User.prototype.create = function () {
   this.player = document.createElement("img");
   this.player.setAttribute("data-src", "");
   this.player.src = "images/cat-neutral.png";
-  var playerSize = Math.round(Math.max(150 * Math.min(getGameScale(), MAX_SIZE_SCALE), 30));
+  var playerSize = Math.round(Math.max(150 * Math.min(getGameScale(), MAX_SIZE_SCALE) * getMobileLandscapeSizeScale(), 20));
   this.player.width = playerSize;
   this.player.id = "pizza-cat";
   this.player.height = playerSize;
@@ -424,7 +443,7 @@ User.prototype.move = function (dt) {
   if (!isActive) return;
 
   var isMobile = Math.min(window.innerWidth, window.innerHeight) <= 600;
-  var speed = 600 * getGameScale() * (isMobile ? 1 : 0.8);
+  var speed = 600 * getGameScale() * (isMobile ? 1 : 0.8) * getMobileLandscapeSpeedScale();
   var dist = speed * dt;
 
   // Merge keyboard + touch + gamepad directions
@@ -541,7 +560,7 @@ Fire.prototype.create = function () {
   this.player = document.createElement("img");
   this.player.setAttribute("data-src", "");
   this.player.id = "peperoni_" + getRandomInt(100000);
-  var bulletSize = Math.round(Math.max(50 * Math.min(getGameScale(), MAX_SIZE_SCALE), 10));
+  var bulletSize = Math.round(Math.max(50 * Math.min(getGameScale(), MAX_SIZE_SCALE) * getMobileLandscapeSizeScale(), 8));
   this.player.width = bulletSize;
   this.player.height = bulletSize;
   this.player.src = "images/p1.png";
@@ -554,7 +573,7 @@ Fire.prototype.create = function () {
 Fire.prototype.move = function (user, dt) {
   if (!isActive) return;
   var isMobile = Math.min(window.innerWidth, window.innerHeight) <= 600;
-  this.x += 600 * getGameScale() * (isMobile ? 2 : 1) * dt;
+  this.x += 600 * getGameScale() * (isMobile ? 2 : 1) * getMobileLandscapeSpeedScale() * dt;
   this.player.style.transform =
     "translate(" + this.x + "px, " + this.y + "px)";
 
@@ -605,11 +624,11 @@ Enemy.prototype.create = function () {
   var isMobile = Math.min(window.innerWidth, window.innerHeight) <= 600;
   var baseDimensions;
   if (isMobile) {
-    baseDimensions = dimensionsNum === 3 ? 300 : dimensionsNum === 2 ? 225 : 150;
+    baseDimensions = dimensionsNum === 3 ? 200 : dimensionsNum === 2 ? 150 : 100;
   } else {
     baseDimensions = dimensionsNum === 3 ? 250 : dimensionsNum === 2 ? 200 : 150;
   }
-  var dimensions = Math.round(Math.max(baseDimensions * Math.min(getGameScale(), MAX_SIZE_SCALE), 30));
+  var dimensions = Math.round(Math.max(baseDimensions * Math.min(getGameScale(), MAX_SIZE_SCALE) * getMobileLandscapeSizeScale(), 20));
   this.player.width = dimensions;
   this.player.height = dimensions;
   this.life += dimensionsNum - 1;
@@ -647,11 +666,11 @@ Enemy.prototype.move = function (user, dt) {
   // Slow enemies by 25% on desktop only
   var isMobile = Math.min(window.innerWidth, window.innerHeight) <= 600;
   var enemySpeedFactor = isMobile ? 1 : 0.375;
-  var moveDist = this.speed * 400 * getGameScale() * enemySpeedFactor * dt;
+  var moveDist = this.speed * 400 * getGameScale() * enemySpeedFactor * getMobileLandscapeSpeedScale() * dt;
   this.x -= moveDist;
 
   if (this.rotate) {
-    var waveDist = 400 * getGameScale() * enemySpeedFactor * dt;
+    var waveDist = 400 * getGameScale() * enemySpeedFactor * getMobileLandscapeSpeedScale() * dt;
     if (!this.reverse) {
       this.y += waveDist;
       if (
