@@ -1508,6 +1508,7 @@
                     ending.typeTimer = 0;
                     ending.phase = 'typing';
                     endingText.textContent = '';
+                    void endingText.offsetWidth;
                     endingText.classList.remove('ending-typewriter--fade-out');
                 }
             }
