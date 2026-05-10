@@ -25,12 +25,21 @@
    Styles for headings and text elements
    ====================== */
 
-.page-title {
+.page-title-games {
   font-family: 'Press Start 2P', cursive;
   color: #ffdd00;
   text-shadow: 2px 2px 4px rgba(255, 255, 200, 0.4);
   text-align: center;
   font-size: clamp(1.2rem, 4vw, 2.5rem);
+  margin-bottom: 50px;
+}
+
+.page-title-stories {
+  font-family: 'story-script-regular', cursive;
+  color: #ffdd00;
+  text-shadow: 2px 2px 4px rgba(255, 255, 200, 0.4);
+  text-align: center;
+  font-size: clamp(1.2rem, 5vw, 4.5rem);
   margin-bottom: 50px;
 }
 
@@ -64,6 +73,10 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+}
+
+.bottom-seperator{
+  margin-bottom: 5rem;
 }
 
 /* ======================

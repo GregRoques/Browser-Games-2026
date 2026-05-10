@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:developers.netlify.com)",
+      "Bash(git -C /Users/gregroques/Desktop/My\\\\ Projects/Kid\\\\ Games/ rev-parse:*)",
+      "Bash(echo:*)"
+    ]
+  }
+}

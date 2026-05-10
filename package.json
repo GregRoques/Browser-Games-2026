@@ -1,0 +1,10 @@
+{
+  "name": "teddy-tales",
+  "version": "1.0.0",
+  "description": "Story link viewer for Teddy",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "node-html-parser": "^6.1.13"
+  }
+}
