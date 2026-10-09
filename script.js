@@ -1,3 +1,3 @@
-var setYear = document.getElementById('copyrightDate');
-setYear.innerHTML = new Date().getFullYear();
-
+  var currYear = new Date().getFullYear();
+  var copyright = `© ${currYear} gregroques.com`;
+  console.log(copyright)

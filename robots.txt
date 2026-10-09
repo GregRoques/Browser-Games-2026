@@ -1,2 +1,17 @@
+# Allow standard search engine indexing
 User-agent: *
+Disallow:
+
+# Block AI crawlers and LLM training bots
+User-agent: GPTBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-Web
+User-agent: PerplexityBot
+User-agent: Bytespider
+User-agent: CCBot
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: Diffbot
+User-agent: FacebookBot
 Disallow: /

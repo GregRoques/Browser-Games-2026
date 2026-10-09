@@ -34,15 +34,6 @@
   margin-bottom: 50px;
 }
 
-.page-title-stories {
-  font-family: 'story-script-regular', cursive;
-  color: #ffdd00;
-  text-shadow: 2px 2px 4px rgba(255, 255, 200, 0.4);
-  text-align: center;
-  font-size: clamp(1.2rem, 5vw, 4.5rem);
-  margin-bottom: 50px;
-}
-
 .copyright-text{
   font-family: 'Press Start 2P', cursive;
   color: #ffdd00;
@@ -51,14 +42,6 @@
   text-align: center;
 }
 
-.copyright-text a, .copyright-text a:link, .copyright-text a:visited, .copyright-text a:active{
-  text-decoration: none;
-  color:inherit;
-}
-
-.copyright-text a:hover{
-  text-decoration: underline;
-}
 
 /* ======================
    Game Grid
