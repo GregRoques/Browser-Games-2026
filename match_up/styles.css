@@ -1,0 +1,491 @@
+/* ===== CUSTOM PROPERTIES ===== */
+:root {
+    --bg-color: #FCECC9;
+    --header-bg: #FFFFFF;
+    --title-color: #E75480;
+    --star-color: #E75480;
+    --metric-bg: #F0A07C;
+    --metric-border: #E8956D;
+    --metric-label: #C97A5A;
+    --metric-value: #333333;
+    --card-border: #9EC8E0;
+    --card-bg: #FFFFFF;
+    --heart-color: #FF69B4;
+    --popup-bg: #FFFFFF;
+    --btn-pink: #E75480;
+    --btn-pink-hover: #D44370;
+    --font-family: 'Nunito', 'Segoe UI', sans-serif;
+}
+
+/* ===== GLOBAL ===== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    font-family: var(--font-family);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ===== POPUP OVERLAY ===== */
+.popup-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.popup-overlay.active {
+    display: flex;
+}
+
+.popup-box {
+    background: var(--popup-bg);
+    border-radius: 20px;
+    padding: 30px 35px;
+    max-width: 580px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    animation: popupSlideIn 0.4s ease-out;
+}
+
+@keyframes popupSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.popup-text-section {
+    flex: 1;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.popup-typed-text {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #444;
+    margin: 0 0 16px 0;
+    min-height: 60px;
+    line-height: 1.5;
+}
+
+.popup-typed-text::after {
+    content: '|';
+    animation: blinkCursor 0.7s step-end infinite;
+    color: var(--title-color);
+    font-weight: 400;
+}
+
+.popup-typed-text.done::after {
+    display: none;
+}
+
+.popup-continue {
+    margin-top: 8px;
+}
+
+.popup-continue.hidden {
+    display: none;
+}
+
+.continue-keyboard {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--title-color);
+    animation: flashText 1.2s ease-in-out infinite;
+}
+
+.continue-touch {
+    display: none;
+}
+
+/* Show touch button and hide keyboard text on touch devices */
+@media (hover: none) and (pointer: coarse) {
+    .continue-keyboard {
+        display: none;
+    }
+    .continue-touch {
+        display: inline-block;
+    }
+}
+
+.btn-continue {
+    background-color: var(--btn-pink);
+    color: white;
+    font-weight: 800;
+    font-family: var(--font-family);
+    border: none;
+    border-radius: 25px;
+    padding: 8px 28px;
+    font-size: 1rem;
+    transition: background-color 0.2s, transform 0.15s;
+}
+
+.btn-continue:hover {
+    background-color: var(--btn-pink-hover);
+    color: white;
+    transform: scale(1.05);
+}
+
+.btn-continue:active {
+    transform: scale(0.97);
+}
+
+.popup-image-section {
+    flex-shrink: 0;
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.popup-img {
+    width: 100%;
+    height: auto;
+    max-height: 160px;
+    object-fit: contain;
+}
+
+@keyframes blinkCursor {
+    50% { opacity: 0; }
+}
+
+@keyframes flashText {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+/* ===== HEART POP ANIMATION ===== */
+.heart-pop {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    font-size: 5rem;
+    color: var(--heart-color);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 5000;
+    user-select: none;
+    text-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+}
+
+.heart-pop.active {
+    animation: heartPopAnim 0.9s ease-out forwards;
+}
+
+@keyframes heartPopAnim {
+    0% {
+        transform: translate(-50%, -50%) scale(0.3);
+        opacity: 0;
+    }
+    25% {
+        transform: translate(-50%, -50%) scale(2.5);
+        opacity: 1;
+    }
+    55% {
+        transform: translate(-50%, -50%) scale(3.5);
+        opacity: 0.9;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(5);
+        opacity: 0;
+    }
+}
+
+/* ===== GAME CONTAINER ===== */
+.game-container {
+    padding: 20px 15px 40px;
+    max-width: 750px;
+}
+
+/* ===== HEADER ===== */
+.game-header {
+    background: var(--header-bg);
+    border-radius: 16px;
+    padding: 16px 20px 18px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    max-width: 680px;
+    position: relative;
+    padding-left: 90px;
+}
+
+.header-img {
+    position: absolute;
+    left: 14px;
+    top: 8px;
+    bottom: 8px;
+    height: calc(100% - 16px);
+    width: auto;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.game-title {
+    font-size: 1.75rem;
+    font-weight: 900;
+    color: var(--title-color);
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+.metrics {
+    flex-wrap: wrap;
+}
+
+.metric-box {
+    background: var(--metric-bg);
+    border: 2px solid var(--metric-border);
+    border-radius: 8px;
+    padding: 4px 18px 6px;
+    min-width: 90px;
+}
+
+.metric-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--metric-label);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.metric-value {
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: var(--metric-value);
+    line-height: 1.2;
+}
+
+/* ===== CARD GRID ===== */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    max-width: 680px;
+}
+
+/* ===== CARD ===== */
+.game-card {
+    aspect-ratio: 1;
+    perspective: 800px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease;
+    border-radius: 12px;
+}
+
+.game-card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.game-card.flipped {
+    animation: cardLift 0.5s ease;
+}
+
+@keyframes cardLift {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.06) translateY(-4px); }
+    100% { transform: scale(1) translateY(0); }
+}
+
+.card-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 12px;
+    border: 2.5px solid var(--card-border);
+    background: var(--card-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.card-front {
+    z-index: 2;
+}
+
+.card-front img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 4px;
+}
+
+/* Fallback heart for missing card-back logo image */
+.card-front .fallback-heart {
+    display: none;
+    font-size: 3rem;
+    color: var(--heart-color);
+    line-height: 1;
+}
+
+.card-front.img-missing img {
+    display: none;
+}
+
+.card-front.img-missing .fallback-heart {
+    display: block;
+}
+
+.card-back {
+    transform: rotateY(180deg);
+}
+
+.card-back img {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+}
+
+/* Fallback for missing card face images */
+.card-back .fallback-icon {
+    display: none;
+    width: 70%;
+    height: 70%;
+    border-radius: 50%;
+    font-size: 2rem;
+    font-weight: 900;
+    color: #fff;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-back.img-missing img {
+    display: none;
+}
+
+.card-back.img-missing .fallback-icon {
+    display: flex;
+}
+
+/* Matched card styling */
+.game-card.matched {
+    cursor: default;
+}
+
+.game-card.matched .card-face {
+    border-color: #90EE90;
+    box-shadow: 0 0 8px rgba(144, 238, 144, 0.4);
+}
+
+/* Hover effect — desktop only */
+@media (hover: hover) and (pointer: fine) {
+    .game-card:not(.flipped):not(.matched):hover .card-inner {
+        transform: translateY(-5px) scale(1.03);
+        transition: transform 0.2s ease;
+    }
+
+    .game-card:not(.flipped):not(.matched):hover .card-face {
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        border-color: #7AB8D4;
+    }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 576px) {
+    .game-title {
+        font-size: 1.35rem;
+    }
+
+    .game-header {
+        padding: 12px 14px 14px;
+        padding-left: 65px;
+    }
+
+    .header-img {
+        left: 8px;
+        top: 6px;
+        bottom: 6px;
+        height: calc(100% - 12px);
+    }
+
+    .metric-box {
+        min-width: 75px;
+        padding: 3px 12px 5px;
+    }
+
+    .metric-value {
+        font-size: 1.15rem;
+    }
+
+    .popup-box {
+        flex-direction: column-reverse;
+        text-align: center;
+        padding: 24px 20px;
+    }
+
+    .popup-image-section {
+        width: 80px;
+    }
+
+    .popup-typed-text {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 500px) {
+    .card-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .game-container {
+        padding: 12px 10px 30px;
+    }
+
+    .game-header {
+        padding-left: 55px;
+    }
+
+    .header-img {
+        left: 6px;
+    }
+
+    .metrics {
+        gap: 6px !important;
+    }
+
+    .metric-box {
+        min-width: 65px;
+        padding: 2px 8px 4px;
+    }
+
+    .metric-label {
+        font-size: 0.6rem;
+    }
+
+    .metric-value {
+        font-size: 1rem;
+    }
+}
