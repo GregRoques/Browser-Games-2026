@@ -53,14 +53,12 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 60px;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
+  max-width: 2000px;
+  margin: 5rem auto;
+  padding: 0 2rem;
 }
 
-.bottom-seperator{
-  margin-bottom: 5rem;
-}
+
 
 /* ======================
    Game Cards
@@ -69,8 +67,13 @@
 
 .game-card {
   display: block;
-  flex: 0 1 400px;
-  max-width: 250px;
+  flex: 0 1 300px;
+  transition: transform 0.2s ease;
+}
+
+.game-card {
+  display: block;
+  flex: 0 1 300px;
   transition: transform 0.2s ease;
 }
 
@@ -85,7 +88,16 @@
 
 .game-thumbnail {
   width: 100%;
-  height: auto;
+  aspect-ratio: 56 / 75;
+  object-fit: cover;
   border-radius: 12px;
   display: block;
+}
+
+.game-card-wide {
+  flex: 0 1 599px;
+}
+
+.game-card-wide .game-thumbnail {
+  aspect-ratio: 79 / 53;
 }

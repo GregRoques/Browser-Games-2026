@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="description" content="Ghastly Halloween Dash - A 3D runner through a haunted house!">
+    <meta name="theme-color" content="#2D1B4E">
+    <!-- No Index -->
+    <meta name="robots" content="noindex, noimageindex, nofollow" />
+    <meta name="googlebot" content="noindex, noimageindex, nofollow" />
+    <title>Ghastly Halloween Dash</title>
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/hud.css">
+    <link rel="stylesheet" href="css/screens.css">
+    <link rel="stylesheet" href="css/controls.css">
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.174.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.174.0/examples/jsm/"
+        }
+    }
+    </script>
+</head>
+<body>
+    <!-- Three.js canvas container -->
+    <div id="game-canvas"></div>
+
+    <!-- HUD -->
+    <div id="hud" class="hud" hidden>
+        <div class="hud__hearts" id="hud-hearts"></div>
+        <div class="hud__lives" id="hud-lives"></div>
+        <div class="hud__stage" id="hud-stage"></div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="screen-loading" class="screen screen--loading">
+        <div class="screen__content">
+            <div class="loading__teddy" id="loading-teddy">&#x1F9F8;</div>
+            <h1 class="loading__title">Ghastly Halloween Dash</h1>
+            <div class="loading__bar-track">
+                <div class="loading__bar-fill" id="loading-bar"></div>
+            </div>
+            <p class="loading__text" id="loading-text">Loading...</p>
+        </div>
+    </div>
+
+    <!-- Title Screen -->
+    <div id="screen-title" class="screen screen--title" hidden>
+        <div class="screen__content">
+            <h1 class="title__heading">Ghastly<br>Halloween Dash</h1>
+            <p class="title__subtitle">A Haunted House Adventure!</p>
+            <div class="title__char-select">
+                <p class="char-select__label">Choose Your Character</p>
+                <div class="char-select__options">
+                    <button class="char-select__btn char-select__btn--active" data-char="teddy" id="char-teddy">
+                        <img class="char-select__icon" src="images/2.png" alt="Teddy">
+                        <span class="char-select__name">Teddy</span>
+                    </button>
+                    <button class="char-select__btn" data-char="heartgirl" id="char-heartgirl">
+                        <img class="char-select__icon" src="images/3.png" alt="Heart Girl">
+                        <span class="char-select__name">Heart Girl</span>
+                    </button>
+                </div>
+            </div>
+            <p class="title__prompt" id="title-prompt">Press ENTER or Tap to Start</p>
+            <div class="title__controls-info">
+                <p><kbd>Z</kbd> / <kbd>X</kbd> &mdash; Move Left / Right</p>
+                <p><kbd>Space</kbd> &mdash; Jump (hold for higher!)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Countdown Overlay -->
+    <div id="screen-countdown" class="screen screen--countdown" hidden>
+        <div class="countdown__number" id="countdown-number">3</div>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="screen-gameover" class="screen screen--gameover" hidden>
+        <div class="screen__content">
+            <h1 class="gameover__heading">Game Over</h1>
+            <p class="gameover__message">The haunted house got you...</p>
+            <p class="gameover__prompt">Press ENTER or Tap to Retry</p>
+        </div>
+    </div>
+
+    <!-- Victory Screen -->
+    <div id="screen-victory" class="screen screen--victory" hidden>
+        <div class="screen__content">
+            <h1 class="victory__heading">You Made It Out!</h1>
+            <p class="victory__message"><span id="victory-char-name">Teddy</span> escaped the Haunted House!</p>
+            <div class="victory__teddy" id="victory-emoji">&#x1F9F8; &#x1F389;</div>
+            <p class="victory__prompt">Press ENTER or Tap to Play Again</p>
+        </div>
+    </div>
+
+    <!-- Ending Screen -->
+    <div id="screen-ending" class="screen screen--ending" hidden>
+        <div class="ending__content">
+            <img id="ending-image" class="ending__image" src="" alt="">
+            <p id="ending-text" class="ending__text"></p>
+            <div id="ending-options" class="ending__options">
+                <h1 class="ending__gameover-heading">The End</h1>
+                <button class="ending__btn" id="btn-play-again">Play Again</button>
+                <button class="ending__btn" id="btn-character-select">Character Select</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stage Complete Overlay -->
+    <div id="screen-stage-complete" class="screen screen--stage-complete" hidden>
+        <div class="screen__content">
+            <h1 class="stage-complete__heading" id="stage-complete-text">Stage 1 Complete!</h1>
+            <p class="stage-complete__message">Get ready for the next stage...</p>
+        </div>
+    </div>
+
+    <!-- Mobile Controls -->
+    <div id="mobile-controls" class="mobile-controls" hidden>
+        <button class="mobile-controls__btn mobile-controls__btn--left" id="btn-left" aria-label="Move Left">&#9664;</button>
+        <button class="mobile-controls__btn mobile-controls__btn--right" id="btn-right" aria-label="Move Right">&#9654;</button>
+        <button class="mobile-controls__btn mobile-controls__btn--jump" id="btn-jump" aria-label="Jump">&#9650;</button>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
